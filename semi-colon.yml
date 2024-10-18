@@ -1,0 +1,62 @@
+---
+- name: Deploy Semi-colon backend
+  hosts: "{{ target_host }}"
+  remote_user: azureuser
+  become: true
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+
+    - name: Install Docker dependencies
+      apt:
+        name: 
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Install Docker Compose
+      become: true
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Clone the application repository
+      git:
+        repo: 'https://github.com/Bahnasy2001/semi-colon-pipeline.git'
+        dest: /home/azureuser/semi-colon-app
+        version: main
+
+    - name: Run Docker Compose for the application
+      shell: |
+        docker-compose down --remove-orphans
+        docker-compose up -d --build
+      args:
+        chdir: /home/azureuser/semi-colon-app
