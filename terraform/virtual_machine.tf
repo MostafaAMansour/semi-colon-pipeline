@@ -116,7 +116,7 @@ resource "azurerm_virtual_machine" "vm" {
     disable_password_authentication = true
      ssh_keys {
       path     = "/home/azureuser/.ssh/authorized_keys"
-      key_data = file("/var/lib/jenkins/.ssh/id_rsa.pub")  
+      key_data = file("/id_rsa.pub")  
     }
   }
   depends_on          = [azurerm_network_interface.nic]
