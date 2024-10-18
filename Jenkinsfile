@@ -91,12 +91,12 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'SSH-semi-colon', keyFileVariable: 'SSH-semi-colon')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'SSH-semi-colon', keyFileVariable: 'SSH_SEMI_COLON')]) {
                         // Run Ansible playbook, using the public IP
                         // sh "ansible-playbook -i ${env.PUBLIC_IP}, semi-colon.yml --extra-vars 'target_host=${env.PUBLIC_IP}' --user azureuser --private-key $SSH_KEY"
                     // sh "chmod 400 id_rsa"
                     // sh "ansible-playbook -i 172.167.142.78, semi-colon.yml --extra-vars 'target_host=172.167.142.78' --user azureuser --private-key './id_rsa' "
-                        sh "ansible-playbook -i ${env.PUBLIC_IP}, semi-colon.yml --extra-vars 'target_host=${env.PUBLIC_IP}' --user azureuser --private-key ${SSH-semi-colon} -e \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\""
+                        sh "ansible-playbook -i ${env.PUBLIC_IP}, semi-colon.yml --extra-vars 'target_host=${env.PUBLIC_IP}' --user azureuser --private-key $SSH_SEMI_COLON -e \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\""
                 }
                     }   
                 // ansible-playbook -i 172.167.142.78, semi-colon.yml --extra-vars 'target_host=172.167.142.78' --user azureuser --private-key "~/.ssh/id_rsa"
