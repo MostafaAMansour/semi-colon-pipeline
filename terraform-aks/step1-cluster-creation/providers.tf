@@ -9,6 +9,10 @@ terraform {
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
-  subscription_id = "71d131e2-d168-45ca-9afe-06ed2ae2e20f"
   features {}
+  # Authenticate using a Service Principal
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  subscription_id  = var.subscription_id
 }
