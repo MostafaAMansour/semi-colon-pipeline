@@ -1,8 +1,11 @@
 ---
 - name: Deploy Semi-colon backend
   hosts: "{{ target_host }}"
-  remote_user: azureuser
+  vars:
+  - user_var: user_name
+  remote_user: "{{user_var}}"
   become: true
+
   tasks:
     - name: Update apt packages
       apt:
@@ -51,7 +54,7 @@
     - name: Clone the application repository
       git:
         repo: 'https://github.com/Bahnasy2001/semi-colon-pipeline.git'
-        dest: /home/azureuser/semi-colon-app
+        dest: /home/{{user_var}}/semi-colon-app
         version: main
 
     - name: Run Docker Compose for the application
@@ -59,4 +62,4 @@
         docker-compose down --remove-orphans
         docker-compose up -d --build
       args:
-        chdir: /home/azureuser/semi-colon-app
+        chdir: /home/{{user_var}}/semi-colon-app
