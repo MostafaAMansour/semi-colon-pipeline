@@ -80,27 +80,6 @@ resource "aws_security_group" "example_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-# Key Pair# 5. Security Group allowing SSH, HTTP, and your application traffic on port 3000
-
-# resource "aws_key_pair" "semicolon_key" {
-#   key_name   = "example-key"  # Name of the key pair
-#   public_key = file("/var/lib/jenkins/privatekeys/id_rsa.pub")  # Path to your public key file
-# }
-
-# # 6. EC2 Instance Creation
-# resource "aws_instance" "example_ec2" {
-#   ami           = "ami-0e8d228ad90af673b"  # Ubuntu Server 20.04 LTS in eu-west-2
-#   instance_type = "t2.micro"
-#   key_name      = aws_key_pair.semicolon_key.key_name
-#   subnet_id     = aws_subnet.example_subnet.id
-#   vpc_security_group_ids = [aws_security_group.example_sg.id]
-
-#   depends_on = [aws_security_group.example_sg]
-
-#   tags = {
-#     Name = "example-ec2"
-#   }
-# }
 
 resource "aws_instance" "example_ec2" {
   ami           = "ami-0e8d228ad90af673b"  # Ubuntu Server 20.04 LTS in eu-west-2
