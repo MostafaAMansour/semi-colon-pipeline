@@ -2,6 +2,10 @@
 
 This section describes the DevOps processes used for the SemiColon Registration System, detailing Docker configurations, Kubernetes deployments, and testing environments.
 
+### 🎥  Demo 🎥
+[Demo video and presentation](https://drive.google.com/drive/u/1/folders/1c-elELzTuevvdp616Tb47Q6NAe5uUY5t)
+
+
 ### ⚙️  Docker Setup ⚙️
 
 The backend project is containerized using Docker, with separate Dockerfiles and Docker Compose configurations for development, testing, and production environments.
