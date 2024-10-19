@@ -74,7 +74,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'SSH-semi-colon', keyFileVariable: 'SSH_SEMI_COLON')]) {
-                        sh "ansible-playbook -i ${env.PUBLIC_IP}, semi-colon.yml --extra-vars 'target_host=${env.PUBLIC_IP}' --user azureuser user_var azureuser --private-key $SSH_SEMI_COLON -e \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\""
+                        sh "ansible-playbook -i ${env.PUBLIC_IP}, semi-colon.yml --extra-vars 'target_host=${env.PUBLIC_IP} user_var=azureuser' --private-key $SSH_SEMI_COLON -e \"ansible_ssh_common_args='-o StrictHostKeyChecking=no'\""
                 }
                     }   
             }
