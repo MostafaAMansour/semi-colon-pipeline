@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     // Set Terraform environment variables for service principal authentication
-                    withEnv(["TF_VAR_client_id=${ARM_CLIENT_ID}", "TF_VAR_client_secret=${ARM_CLIENT_SECRET}", "TF_VAR_tenant_id=${ARM_TENANT_ID}", "TF_VAR_subscription_id=${ARM_SUBSCRIPTION_ID}"]) {
+                    withEnv(["TF_VAR_client_id=${AZURE_CLIENT_ID}", "TF_VAR_client_secret=${AZURE_CLIENT_SECRET}", "TF_VAR_tenant_id=${AZURE_TENANT_ID}", "TF_VAR_subscription_id=${AZURE_SUBSCRIPTION_ID}"]) {
                         sshagent(['SSH-semi-colon']) {
                             // Initialize and apply Terraform for AKS cluster creation
                             sh 'cd terraform-aks/step1-cluster-creation && terraform init'
@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     // Apply Terraform for deploying the application on the AKS cluster
-                    withEnv(["TF_VAR_client_id=${ARM_CLIENT_ID}", "TF_VAR_client_secret=${ARM_CLIENT_SECRET}", "TF_VAR_tenant_id=${ARM_TENANT_ID}", "TF_VAR_subscription_id=${ARM_SUBSCRIPTION_ID}"]) {
+                    withEnv(["TF_VAR_client_id=${AZURE_CLIENT_ID}", "TF_VAR_client_secret=${AZURE_CLIENT_SECRET}", "TF_VAR_tenant_id=${AZURE_TENANT_ID}", "TF_VAR_subscription_id=${AZURE_SUBSCRIPTION_ID}"]) {
                         sshagent(['SSH-semi-colon']) {
                             sh 'cd terraform-aks/step2-deploying-application && terraform init'
                             sh 'cd terraform-aks/step2-deploying-application && terraform apply -auto-approve'
