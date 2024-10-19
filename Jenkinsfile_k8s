@@ -50,6 +50,7 @@ pipeline {
                     // Set Terraform environment variables
                     withEnv(["TF_VAR_client_id=${AZURE_CLIENT_ID}", "TF_VAR_client_secret=${AZURE_CLIENT_SECRET}", "TF_VAR_tenant_id=${AZURE_TENANT_ID}", "TF_VAR_subscription_id=${AZURE_SUBSCRIPTION_ID}"]) {
                         // Use sshagent to load SSH credentials
+                        sh 'az logout || echo "No previous Azure session to logout from"'
                         sshagent(['SSH-semi-colon']) { 
                             sh 'cd terraform-aks/step1-cluster-creation && terraform init'
                             sh 'cd terraform-aks/step1-cluster-creation && terraform apply -auto-approve'
